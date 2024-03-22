@@ -6,6 +6,8 @@
 {
   imports = [
     ./chrism.nix
+    ./alice.nix
+    ./bob.nix
     ./configuration.nix
   ];
 
