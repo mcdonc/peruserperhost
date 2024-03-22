@@ -4,7 +4,10 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports = [ ./configuration.nix ];
+  imports = [
+    ./chrism.nix
+    ./configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;

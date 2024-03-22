@@ -72,21 +72,6 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.chrism = {
-    isNormalUser = true;
-    description = "Chris McDonough";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      firefox
-      kate
-    #  thunderbird
-    ];
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOLXUsGqUIEMfcXoIiiItmGNqOucJjx5D6ZEE3KgLKYV ednesia"
-     ];
-    };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
