@@ -11,6 +11,8 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
+  services.postgresql.enable = true;
+
   networking.hostName = "host1"; # Define your hostname.
 
   boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ehci_pci" "ahci" "sd_mod" "sr_mod" ];
