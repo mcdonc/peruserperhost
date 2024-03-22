@@ -16,6 +16,10 @@
             system = "x86_64-linux";
             modules = [ ./host2.nix ];
           };
+          host3 = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [ ./host3.nix ];
+          };
         };
       };
 }
