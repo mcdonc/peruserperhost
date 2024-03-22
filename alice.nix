@@ -8,6 +8,7 @@
     };
   home-manager = {
     users.alice = {
+      imports = [ ./home.nix ];
       programs.git = {
         enable = true;
         userName = "Alice";

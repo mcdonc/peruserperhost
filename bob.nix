@@ -8,6 +8,7 @@
     };
   home-manager = {
     users.bob = {
+      imports = [ ./home.nix ];
       programs.git = {
         enable = true;
         userName = "Bob";
