@@ -6,4 +6,14 @@
     description = "Bob";
     extraGroups = [ "networkmanager" ];
     };
+  home-manager = {
+    users.bob = {
+      programs.git = {
+        enable = true;
+        userName = "Bob";
+        userEmail = "bob@example.com";
+      };
+      home.stateVersion = "23.11";
+    };
+  };
 }
