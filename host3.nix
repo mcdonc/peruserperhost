@@ -10,7 +10,11 @@
     ./bob.nix
     ./configuration.nix
   ];
-
+  home-manager.users.bob = {
+    programs.bash.shellAliases = {
+      latr = "${pkgs.coreutils}/bin/ls -latr";
+    };
+  };
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
