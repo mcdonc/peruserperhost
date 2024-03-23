@@ -10,6 +10,27 @@
     ./configuration.nix
   ];
 
+  home-manager.users.alice = {
+
+    systemd.user.services.show-nixconfig = {
+      Unit = {
+        Description = ''
+          Run an HTTP server that displays the content of /etc/nixos on host2
+        '';
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = ''
+          ${pkgs.python311}/bin/python -m http.server -d /etc/nixos 6543
+        '';
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
+
+  };
+  
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
