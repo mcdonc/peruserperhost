@@ -3,19 +3,22 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    musnix.url = "github:musnix/musnix"; 
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable }@inputs:
+  outputs = { self, nixpkgs, musnix }@inputs:
   let
     system = "x86_64-linux";
     specialArgs = inputs // { inherit system; };
   in {
       nixosConfigurations = {
-        host1 = nixpkgs.lib.nixosSystem {
+        nixmusic = nixpkgs.lib.nixosSystem {
           specialArgs = specialArgs;
           system = system;
-          modules = [ ./configuration.nix ];
+          modules = [
+	  musnix.nixosModules.musnix
+	  ./configuration.nix
+	  ];
         };
       };
     };

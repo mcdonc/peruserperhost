@@ -2,22 +2,27 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, nixpkgs-unstable, system, ... }:
-
-let
-        pkgs-unstable = import nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-        };
-    in
-
+{ config, pkgs, lib, system, ... }:
 
 {
+
+  musnix.enable = true;
+  musnix.soundcardPciId = "00:05.0";
+  musnix.kernel.realtime = true;
+  musnix.rtirq.enable = true;
+  
+  system.activationScripts.diff = {
+    supportsDryActivation = true;
+    text = ''
+      ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff \
+           /run/current-system "$systemConfig"
+    '';
+  };
 
   users.users.chrism = {
     isNormalUser = true;
     description = "Chris McDonough";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "audio" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOLXUsGqUIEMfcXoIiiItmGNqOucJjx5D6ZEE3KgLKYV ednesia"
      ];
@@ -58,8 +63,12 @@ let
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  #services.xserver.displayManager.sddm.enable = true;
+  #services.xserver.desktopManager.plasma5.enable = true;
+
+  services.xserver.desktopManager.cinnamon.enable = true;
+  services.xserver.displayManager.defaultSession = "cinnamon";
+  services.xserver.displayManager.lightdm.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -74,8 +83,8 @@ let
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
+
   services.pipewire = {
-    package = pkgs-unstable.pipewire;
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
@@ -95,6 +104,13 @@ let
     git
     emacs
     vim
+    ardour
+    audacity
+    qjackctl
+    calf
+    tap-plugins
+    x42-plugins
+    helm
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -131,7 +147,7 @@ let
 
   services.postgresql.enable = true;
 
-  networking.hostName = "host1"; # Define your hostname.
+  networking.hostName = "nixmusic"; # Define your hostname.
 
   boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "ehci_pci" "ahci" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
