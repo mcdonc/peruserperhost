@@ -106,11 +106,17 @@
     vim
     ardour
     audacity
-    qjackctl
+    #qjackctl
+    qpwgraph
+    qastools
     calf
     tap-plugins
     x42-plugins
     helm
+    firefox
+    setbfree
+    audacity
+    google-chrome
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
